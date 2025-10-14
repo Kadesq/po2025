@@ -26,15 +26,18 @@ public class Main {
             }
         }
 
+        int i=1;
         while(matches != 6){
             int number = rand.nextInt(49)+1;
             if(!lottoNumbers.contains(number)){
                 lottoNumbers.add(number);
+                i++;
             }
         }
 
         System.out.println("Wynik losowania: " + lottoNumbers);
         System.out.println("Twoje liczby: " + myNumbers);
         System.out.println("Trafiles: " + matches + " liczb.");
+        System.out.println("Liczba prob: " + i);
     }
 }
