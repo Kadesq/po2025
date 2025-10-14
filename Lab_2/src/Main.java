@@ -9,35 +9,40 @@ public class Main {
         }
 
         Random rand = new Random();
-        ArrayList<Integer> lottoNumbers = new ArrayList<>();
-
-        while(lottoNumbers.size() < 6){
-            int number = rand.nextInt(49)+1;
-            if(!lottoNumbers.contains(number)){
-                lottoNumbers.add(number);
-            }
-        }
+        long start = System.currentTimeMillis();
 
         int matches = 0;
+        int attemps = 0;
 
-        for(int number : myNumbers){
-            if(lottoNumbers.contains(number)){
-                matches++;
-            }
-        }
+        ArrayList<Integer> lottoNumbers = new ArrayList<>();
 
-        int i=1;
         while(matches != 6){
-            int number = rand.nextInt(49)+1;
-            if(!lottoNumbers.contains(number)){
-                lottoNumbers.add(number);
-                i++;
+            lottoNumbers.clear();
+
+            while(lottoNumbers.size() < 6){
+                int number = rand.nextInt(49)+1;
+                if(!lottoNumbers.contains(number)){
+                    lottoNumbers.add(number);
+                }
             }
+
+            matches=0;
+
+            for(int number : lottoNumbers){
+                if(lottoNumbers.contains(number)){
+                    matches++;
+                }
+            }
+
+            attemps++;
         }
+
+        long end = System.currentTimeMillis();
+        long duration = end - start;
 
         System.out.println("Wynik losowania: " + lottoNumbers);
         System.out.println("Twoje liczby: " + myNumbers);
         System.out.println("Trafiles: " + matches + " liczb.");
-        System.out.println("Liczba prob: " + i);
+        System.out.println("Liczba prob: " + attemps + " liczb.");
     }
 }
