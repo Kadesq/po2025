@@ -2,15 +2,34 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args){
-        Random rand = new Random();
+        ArrayList<Integer> myNumbers = new ArrayList<>();
+        for (String arg : args) {
+            int myNumber = Integer.parseInt(arg);
+            myNumbers.add(myNumber);
+        }
 
+        Random rand = new Random();
         ArrayList<Integer> lottoNumbers = new ArrayList<>();
 
         while(lottoNumbers.size() < 6){
             int number = rand.nextInt(49)+1;
-            lottoNumbers.add(number);
+            if(!lottoNumbers.contains(number)){
+                lottoNumbers.add(number);
+            }
         }
 
-        System.out.println("Wynik: " + lottoNumbers);
+        int matches = 0;
+
+        for(int number : myNumbers){
+            if(lottoNumbers.contains(number)){
+                matches++;
+            }
+        }
+
+
+
+        System.out.println("Wynik losowania: " + lottoNumbers);
+        System.out.println("Twoje liczby: " + myNumbers);
+        System.out.println("Trafiles: " + matches + " liczb.");
     }
 }
