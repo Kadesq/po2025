@@ -26,7 +26,12 @@ public class Main {
             }
         }
 
-
+        while(matches != 6){
+            int number = rand.nextInt(49)+1;
+            if(!lottoNumbers.contains(number)){
+                lottoNumbers.add(number);
+            }
+        }
 
         System.out.println("Wynik losowania: " + lottoNumbers);
         System.out.println("Twoje liczby: " + myNumbers);
