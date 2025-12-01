@@ -1,8 +1,8 @@
 package symulator;
 
 public class Silnik extends Komponent {
-    private double maxObroty;
-    private double Obroty;
+    private int maxObroty;
+    private int Obroty;
 
     public Silnik(String nazwa, double waga, double cena) {
         super(nazwa, waga, cena);
@@ -18,8 +18,20 @@ public class Silnik extends Komponent {
         this.Obroty = 0;
     }
 
-    //public double zwiekszObroty() {}
+    public void zwiekszObroty() {
+        this.Obroty += 200;
+    }
 
-    //public double zmniejszObroty() {}
+    public void zmniejszObroty() {
+        this.Obroty -= 200;
+    }
+
+    public int getMaxObroty() {
+        return maxObroty;
+    }
+
+    public int getObroty() {
+        return Obroty;
+    }
 
 }

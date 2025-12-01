@@ -5,7 +5,7 @@ public class SkrzyniaBiegow extends Komponent{
     private int iloscBiegow;
     private double aktualnePrzylozenie;
 
-    public SkrzyniaBiegow(String nazwa, double cena, double waga) {
+    public SkrzyniaBiegow(String nazwa, double cena, double waga, int iloscBiegow) {
         super(nazwa, cena, waga);
         this.aktualnyBieg = 0;
         this.iloscBiegow = 6;
