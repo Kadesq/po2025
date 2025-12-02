@@ -19,7 +19,7 @@ public class Samochod {
     }
 
     public static void main(String[] args){
-        Samochod samochod = new Samochod();
+        Samochod samochod = new Samochod(500, 400);
         samochod.wlacz();
         samochod.skrzynia.zwiekszBieg();
         samochod.silnik.zwiekszObroty();
