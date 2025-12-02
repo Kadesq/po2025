@@ -19,7 +19,9 @@ public class Samochod {
     }
 
     public static void main(String[] args){
-        Samochod samochod = new Samochod(500, 400);
+        Silnik silnikSamochodu = new Silnik("V12", 1.0, 1.0);
+        SkrzyniaBiegow skrzyniaSamochodu = new SkrzyniaBiegow("Automat", 1.0, 1.0, 6);
+        Samochod samochod = new Samochod(silnikSamochodu, skrzyniaSamochodu);
         samochod.wlacz();
         samochod.skrzynia.zwiekszBieg();
         samochod.silnik.zwiekszObroty();
