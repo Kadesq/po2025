@@ -1,4 +1,4 @@
-package com.example.demo;
+package org.example.samochodgui;
 
 import javafx.application.Application;
 
