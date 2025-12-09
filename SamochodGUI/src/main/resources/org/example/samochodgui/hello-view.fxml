@@ -238,7 +238,7 @@
                                 <!-- Placeholder na obrazek - wstaw tu swoją ścieżkę -->
                                 <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@car-icon.jpg" />
+                                        <Image url="@../../../../../../../Samochod/src/main/resources/car-icon.jpg" />
                                     </image>
                                 </ImageView>
                                 <Label text="Car" />

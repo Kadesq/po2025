@@ -8,10 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="demo" />
         <module name="symulator" />
+        <module name="Samochod" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Samochod" target="20" />
-    </bytecodeTargetLevel>
   </component>
 </project>

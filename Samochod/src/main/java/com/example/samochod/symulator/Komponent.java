@@ -1,0 +1,35 @@
+package com.example.samochod.symulator;
+
+public abstract class Komponent {
+    private String nazwa;
+    private double waga;
+    private double cena;
+
+    public Komponent(String nazwa, double waga, double cena) {
+        this.nazwa = nazwa;
+        this.waga = waga;
+        this.cena = cena;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public double getCena() {
+        return cena;
+    }
+
+    public double getWaga() {
+        return waga;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+    public void setWaga(double waga) {
+        this.waga = waga;
+    }
+    public void setCena(double cena) {
+        this.cena = cena;
+    }
+}
