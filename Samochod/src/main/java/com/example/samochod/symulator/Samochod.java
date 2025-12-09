@@ -7,7 +7,7 @@ public class Samochod {
     private Silnik silnik;
     private SkrzyniaBiegow skrzynia;
 
-    public Samochod(Silnik silnik, SkrzyniaBiegow skrzynia) {
+    public Samochod(String model, String nrRejestracyjny) {
         this.model = model;
         this.nrRejestracyjny = nrRejestracyjny;
 
