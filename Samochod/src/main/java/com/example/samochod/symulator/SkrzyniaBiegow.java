@@ -12,21 +12,33 @@ public class SkrzyniaBiegow extends Komponent{
     }
 
     public void zwiekszBieg(){
-        if(aktualnyBieg<iloscBiegow){
-            aktualnyBieg++;
+        if(this.sprzeglo.getStanSprzegla()){
+            if(aktualnyBieg<iloscBiegow){
+                aktualnyBieg++;
+                System.out.println("Zwiększono bieg na: " + aktualnyBieg);
+            }
+            else{
+                System.out.println("Maksymalny bieg");
+            }
+        }else {
+            System.out.println("Wrrgrrzmrrr Nie wciśnięto sprzęgła.");
         }
-        else{
-            System.out.println("Maksymalny bieg");
-        }
+
     }
 
     public void zmniejszBieg(){
-        if(aktualnyBieg>0){
-            aktualnyBieg--;
+        if(this.sprzeglo.getStanSprzegla()){
+            if(aktualnyBieg>0){
+                aktualnyBieg--;
+                System.out.println("Zmniejszono bieg na: " + aktualnyBieg);
+            }
+            else {
+                System.out.println("Aktualnie jest Neutralny bieg");
+            }
+        }else {
+            System.out.println("Wrrgrrzmrrr Nie wciśnięto sprzęgła.");
         }
-        else {
-            System.out.println("Aktualnie jest Neutralny bieg");
-        }
+
     }
 
     public void luz(){

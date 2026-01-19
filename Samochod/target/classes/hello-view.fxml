@@ -86,6 +86,7 @@
                             </content>
                         </TitledPane>
 
+
                         <!-- Panel: Skrzynia Biegów -->
                         <TitledPane animated="false" text="Skrzynia Biegów">
                             <content>
@@ -231,7 +232,7 @@
                         <Label text="Mapa" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
 
                         <!-- Ikona samochodu (wymaga pliku graficznego np. car.png w folderze zasobów)-->
-                        <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0">
+                        <VBox fx:id="carIcon" alignment="CENTER" layoutX="50.0" layoutY="50.0">
                             <children>
                                  <!--Placeholder na obrazek - wstaw tu swoją ścieżkę-->
                                 <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
