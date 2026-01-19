@@ -1,61 +1,53 @@
+
 package com.example.samochod;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import com.example.samochod.symulator.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import com.example.samochod.symulator.*;
+import javafx.scene.image.ImageView;
+import java.io.IOException;
 
 public class HelloController {
 
     private Samochod mojSamochod;
-
-    @FXML private TextField engineWeightTextField;
-
-    @FXML private VBox carIcon;
-
+    public AnchorPane mapPane;
     private ObservableList<Samochod> listaSamochodow = FXCollections.observableArrayList();
 
-    public void odswiezWidok() {
+
+    public void odswiezWidok(){
         if (mojSamochod == null) {
-            // Dane Samochodu
             carmodelTextField.setText("");
             carregistrationTextField.setText("");
             carweightTextField.setText("");
-            carspeedTextField.setText("");
-
-            // Skrzynia Biegów
-            gearboxnameTextField.setText("");
-            gearboxpriceTextField.setText("");
-            gearboxweightTextField.setText("");
-            gearboxgearTextField.setText("");
-
-            // Silnik
             enginenameTextField.setText("");
-            enginepriceTextField.setText("");
-            engineweightTextField.setText("");
             enginerpmTextField.setText("");
-
-            // Sprzęgło
-            clutchnameTextField.setText("");
-            clutchpriceTextField.setText("");
+            engineweightTextField.setText("");
+            enginepriceTextField.setText("");
+            gearboxgearTextField.setText("");
+            gearboxweightTextField.setText("");
+            gearboxpriceTextField.setText("");
+            gearboxnameTextField.setText("");
             clutchweightTextField.setText("");
+            clutchpriceTextField.setText("");
+            clutchnameTextField.setText("");
             clutchstateTextField.setText("");
-
-            if (carIcon != null) {
-                carIcon.setVisible(false);
-            }
 
             return;
         }
-
-
         //wypelnianie menu samochód
-        carIcon.setVisible(true);
-
         carmodelTextField.setText(mojSamochod.getModel());
         carregistrationTextField.setText(mojSamochod.getNrRejestracyjny());
         carweightTextField.setText(String.valueOf(mojSamochod.getWaga()));
@@ -91,15 +83,62 @@ public class HelloController {
         deaccelerateButton.setDisable(!czyWlaczony || czySprzeglo);
         shiftupButton.setDisable(!czyWlaczony || !czySprzeglo);
         shiftdownButton.setDisable(!czyWlaczony || !czySprzeglo);
+
     }
 
-    @FXML
-    public void onCarSelected() {
-        mojSamochod = carComboBox.getSelectionModel().getSelectedItem();
-        if (mojSamochod != null) {
-            odswiezWidok();
-        }
+    // W HelloController.java:
+
+    private void stworzIkonkeDlaAuta(Samochod auto) {
+        // 1. Tworzenie ikonki (bez zmian)
+        javafx.scene.image.Image obrazek = new javafx.scene.image.Image(getClass().getResourceAsStream("/car-icon.jpg"));
+        ImageView ikonka = new ImageView(obrazek);
+        ikonka.setFitWidth(50);
+        ikonka.setPreserveRatio(true);
+
+        Label podpis = new Label(auto.getModel() + "\n" + auto.getNrRejestracyjny());
+        podpis.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-background-color: rgba(255,255,255,0.7); -fx-padding: 2;");
+        podpis.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+        VBox kontener = new VBox(ikonka, podpis);
+        kontener.setAlignment(javafx.geometry.Pos.CENTER); // Wyśrodkowanie
+        kontener.setLayoutX(0); // Pozycja startowa
+        kontener.setLayoutY(0);
+
+
+        auto.setIkonka(kontener);
+        mapPane.getChildren().add(kontener);
+
+        auto.addListener(new Listener() {
+            @Override
+            public void update() {
+                Platform.runLater(() -> {
+                    Pozycja p = auto.getPozycja();
+                    // Przesuwamy cały VBox
+                    kontener.setLayoutX(p.getX() - 25);
+                    kontener.setLayoutY(p.getY() - 25);
+
+                    // OBRÓT: Obracamy TYLKO obrazek, a napis zostaje poziomo!
+                    // To jest super ficzer - napis się nie kręci do góry nogami.
+                    Pozycja cel = auto.getCel();
+                    double dx = cel.getX() - p.getX();
+                    double dy = cel.getY() - p.getY();
+                    if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                        double angle = Math.toDegrees(Math.atan2(dy, dx));
+                        ikonka.setRotate(angle); // Kręcimy tylko ImageView w środku
+                    }
+
+                    if (auto == mojSamochod) {
+                        double predkosc = auto.getAktualnaPredkosc();
+                        // Ustawiamy tekst w polu carspeedTextField (zrób formatowanie do 1 miejsca po przecinku)
+                        carspeedTextField.setText(String.format("%.1f km/h", predkosc));
+                    }
+                });
+            }
+        });
+
+        auto.start();
     }
+
 
     public void initialize(){
         carComboBox.setItems(listaSamochodow);
@@ -115,6 +154,11 @@ public class HelloController {
     public Button startButton;
     public void onStartButton(){
         if (mojSamochod != null){
+            if(!mojSamochod.getSkrzynia().getSprzeglo().getStanSprzegla()){
+                System.out.println("Wciśnij sprzęgło");
+                return;
+            }
+
             mojSamochod.wlacz();
             odswiezWidok();
         }
@@ -127,34 +171,32 @@ public class HelloController {
             odswiezWidok();
         }
     }
-
-    @FXML public TextField carmodelTextField;
-    @FXML public TextField carregistrationTextField;
-    @FXML public TextField carweightTextField;
-    @FXML public TextField carspeedTextField;
-    @FXML public TextField gearboxnameTextField;
-    @FXML public TextField gearboxpriceTextField;
-    @FXML public TextField gearboxweightTextField;
-    @FXML public TextField gearboxgearTextField;
-
+    public TextField carmodelTextField;
+    public TextField carregistrationTextField;
+    public TextField carweightTextField;
+    public TextField carspeedTextField;
+    public TextField gearboxnameTextField;
+    public TextField gearboxpriceTextField;
+    public TextField gearboxweightTextField;
+    public TextField gearboxgearTextField;
     public Button shiftupButton;
     public void onShiftupButton(){
         if (mojSamochod != null){
-            mojSamochod.getSkrzynia().zwiekszBieg();
+            mojSamochod.zwiekszBieg();
             odswiezWidok();
         }
     }
     public Button shiftdownButton;
     public void onShiftdownButton(){
         if (mojSamochod != null){
-            mojSamochod.getSkrzynia().zmniejszBieg();
+            mojSamochod.zmniejszBieg();
             odswiezWidok();
         }
     }
-    @FXML public TextField enginenameTextField;
-    @FXML public TextField enginepriceTextField;
-    @FXML public TextField engineweightTextField;
-    @FXML public TextField enginerpmTextField;
+    public TextField enginenameTextField;
+    public TextField enginepriceTextField;
+    public TextField engineweightTextField;
+    public TextField enginerpmTextField;
     public Button accelerateButton;
     public void onAccelerateButton(){
         if (mojSamochod != null){
@@ -169,27 +211,24 @@ public class HelloController {
             odswiezWidok();
         }
     }
-    @FXML public TextField clutchnameTextField;
-    @FXML public TextField clutchpriceTextField;
-    @FXML public TextField clutchweightTextField;
-    @FXML public TextField clutchstateTextField;
+    public TextField clutchnameTextField;
+    public TextField clutchpriceTextField;
+    public TextField clutchweightTextField;
+    public TextField clutchstateTextField;
     public Button clutchengButton;
     public void  onClutchEngButton(){
-        if (mojSamochod != null){
-            mojSamochod.getSkrzynia().getSprzeglo().wcisnij();
-            System.out.println("Wciśnięto sprzęgło.");
+        if (mojSamochod != null) {
+            mojSamochod.getSkrzynia().getSprzeglo().setStanSprzegla(true);
             odswiezWidok();
         }
     }
     public Button clutchdngButton;
     public void onClutchDngButton(){
-        if (mojSamochod != null){
-            mojSamochod.getSkrzynia().getSprzeglo().zwolnij();
-            System.out.println("Zwolniono sprzęgło.");
+        if (mojSamochod != null) {
+            mojSamochod.getSkrzynia().getSprzeglo().setStanSprzegla(false);
             odswiezWidok();
         }
     }
-
     public ComboBox carComboBox;
     public void onCarComboBoxButton(){
         Samochod wybrane = (Samochod) carComboBox.getSelectionModel().getSelectedItem();
@@ -197,127 +236,79 @@ public class HelloController {
             mojSamochod = wybrane;
             odswiezWidok();
         }
-        odswiezWidok();
+        //odswiezWidok();
     }
-
     public Button addcarButton;
     public void onAddCarButton(){
-        //kazda wartosc zapisywana jest w Stringu
-        //samochod
-        String model = carmodelTextField.getText();
-        String nr = carregistrationTextField.getText();
-        String weight = carweightTextField.getText();
-        String speed = carspeedTextField.getText();
-        //skrzynia
-        String gearboxname = gearboxnameTextField.getText();
-        String gearboxprice = gearboxpriceTextField.getText();
-        String gearboxweight = gearboxweightTextField.getText();
-        String gearboxgear = gearboxgearTextField.getText();
-        //silnik
-        String enginename = enginenameTextField.getText();
-        String engineweight = engineweightTextField.getText();
-        String enginerpm = enginerpmTextField.getText();
-        String engineprice = enginepriceTextField.getText();
-        //sprzeglo
-        String clutchname = clutchnameTextField.getText();
-        String clutchprice = clutchpriceTextField.getText();
-        String clutchweight = clutchweightTextField.getText();
-        String clutchstate = clutchstateTextField.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/add-car-view.fxml"));
+            Parent root = loader.load();
 
+            Stage stage = new Stage();
+            stage.setTitle("Dodawanie pojazdu");
+            stage.setScene(new Scene(root));
 
-        if (model != null && !model.isEmpty() && nr != null && !nr.isEmpty()){
-            Samochod nowe = new Samochod(model, nr);
-            //wypelnianie obiektu silnik
-            nowe.getSilnik().setNazwa(enginename);
-            try {
-                nowe.getSilnik().setWaga(Double.parseDouble(engineweight));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam wage 300!.");
-                nowe.getSilnik().setWaga(300.0);
-            }
-            try {
-                nowe.getSilnik().setMaxObroty(Integer.parseInt(enginerpm));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam RPM'y 5000!");
-                nowe.getSilnik().setMaxObroty(5000);
-            }
-            try {
-                nowe.getSilnik().setCena(Double.parseDouble(engineprice));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam Cenę 1000!");
-                nowe.getSilnik().setCena(1000);
-            }
-            //wypelnianie obiektu skrzynia
-            nowe.getSkrzynia().setNazwa(gearboxname);
-            try {
-                nowe.getSkrzynia().setWaga(Double.parseDouble(gearboxweight));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam wage 300!.");
-                nowe.getSkrzynia().setWaga(300.0);
-            }
-            try {
-                nowe.getSkrzynia().setIloscBiegow(Integer.parseInt(gearboxgear));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam liczbę biegów na 6!");
-                nowe.getSkrzynia().setIloscBiegow(6);
-            }
-            try {
-                nowe.getSkrzynia().setCena(Double.parseDouble(gearboxprice));
-            } catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam Cenę 1000!");
-                nowe.getSkrzynia().setCena(1000);
-            }
-            //wypelnianie obiektu sprzeglo
-            nowe.getSkrzynia().getSprzeglo().setNazwa(clutchname);
-            try {
-                nowe.getSkrzynia().getSprzeglo().setWaga(Double.parseDouble(clutchweight));
-            }  catch (NumberFormatException e) {
-                System.out.println("To nie jest liczba! Ustawiam wage 300!.");
-                nowe.getSkrzynia().setWaga(300.0);
-            }
-            try {
-                nowe.getSkrzynia().getSprzeglo().setCena(Double.parseDouble(clutchprice));
-            } catch (NumberFormatException e) {
-                System.out.println("To  nie jest liczba! Ustawiam cenę 300!.");
-                nowe.getSkrzynia().getSprzeglo().setCena(300);
-            }
-            try {
-                nowe.getSkrzynia().getSprzeglo().setStanSprzegla(Boolean.parseBoolean(clutchstate));
-            } catch (NumberFormatException e) {
-                System.out.println("Wpisz true lub false! Ustawiam fasle!");
-                nowe.getSkrzynia().getSprzeglo().setStanSprzegla(Boolean.FALSE);
-            }
+            stage.initModality(Modality.APPLICATION_MODAL); //blokuje glowne gui
+            stage.showAndWait();
 
-            listaSamochodow.add(nowe);
-            carComboBox.getSelectionModel().select(nowe);
-            onCarComboBoxButton();
-            odswiezWidok();
+            AddCarController controller = loader.getController();
+            Samochod auto = controller.getNoweAuto();
+
+            if (auto != null){
+                stworzIkonkeDlaAuta(auto);
+                listaSamochodow.add(auto);
+                carComboBox.getSelectionModel().select(auto);
+                onCarComboBoxButton();
+                System.out.println("Dodano: " + auto.getModel());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
     public Button rmcarButton;
-    public void onRmCarButton(){
-        int selectedIndex = carComboBox.getSelectionModel().getSelectedIndex();
+    public void onRmCarButton() {
+        if (mojSamochod != null) {
+            // 1. Sprzątanie po usuwanym aucie
+            // Zatrzymujemy wątek (ważne, żeby nie aktualizował GUI po śmierci)
+            mojSamochod.interrupt(); // Lub ustaw flagę isRunning = false jeśli masz setter
 
-        if (selectedIndex >= 0){
-            listaSamochodow.remove(selectedIndex);
+            // Usuwamy z mapy (jeśli ma ikonkę)
+            if (mojSamochod.getIkonka() != null) {
+                mapPane.getChildren().remove(mojSamochod.getIkonka());
+            }
 
-            mojSamochod = null;
-            carComboBox.getSelectionModel().clearSelection();
+            // Usuwamy z listy danych
+            listaSamochodow.remove(mojSamochod);
 
+            // 2. Wybór nowego auta (Automatyczny)
+            if (!listaSamochodow.isEmpty()) {
+                // Wybieramy pierwsze z listy (index 0)
+                Samochod noweWybrane = listaSamochodow.get(0);
+
+                // Ustawiamy w ComboBoxie i zmiennej
+                carComboBox.getSelectionModel().select(noweWybrane);
+                mojSamochod = noweWybrane;
+
+                System.out.println("Usunięto. Wybrano automatycznie: " + mojSamochod.getModel());
+            } else {
+                // Lista pusta - czyścimy
+                mojSamochod = null;
+                carComboBox.getSelectionModel().clearSelection();
+                System.out.println("Usunięto ostatnie auto.");
+            }
+
+            // 3. Odświeżamy GUI
             odswiezWidok();
-            System.out.println("Samochód usunięty.");
         }
     }
 
-    public void onGasButton(){
+
+    public void onMapClicked(javafx.scene.input.MouseEvent event){
         if (mojSamochod != null){
-            mojSamochod.getSilnik().zwiekszObroty();
-            mojSamochod.jedz();
-            carIcon.setLayoutX(mojSamochod.getPozycja().getX());
-            odswiezWidok();
-        }else {
-            System.out.println("Najpierw wybierz lub dodaj samochód!");
+            double x =  event.getX();
+            double y = event.getY();
+            System.out.println("x: " + x + " y: " + y);
+            mojSamochod.jedzDo(x, y);
         }
     }
 

@@ -1,4 +1,4 @@
-package pl.nikodem.samochod.symulator;
+package com.example.samochod.symulator;
 
 public class Komponent {
     private String nazwa;

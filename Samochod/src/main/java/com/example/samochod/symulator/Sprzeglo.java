@@ -1,19 +1,17 @@
+
 package com.example.samochod.symulator;
 
-public class Sprzeglo extends Komponent{
+public class Sprzeglo extends Komponent {
     boolean stanSprzegla;
-
-    public Sprzeglo(String nazwa, double waga, double cena, boolean stanSprzegla) {
-        super(nazwa, waga, cena);
-        this.stanSprzegla=stanSprzegla;
+    public Sprzeglo(String name, double waga, double cena, boolean StanSprzegla) {
+        super(name, waga, cena);
+        this.stanSprzegla = StanSprzegla;
     }
-
     public void wcisnij(){
-        stanSprzegla=true;
+        stanSprzegla = true;
     }
-
     public void zwolnij(){
-        stanSprzegla=false;
+        stanSprzegla = false;
     }
 
     public boolean getStanSprzegla() { return stanSprzegla; }

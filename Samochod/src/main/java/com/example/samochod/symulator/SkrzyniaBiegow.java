@@ -1,48 +1,36 @@
 package com.example.samochod.symulator;
 
-public class SkrzyniaBiegow extends Komponent{
+public class SkrzyniaBiegow extends Komponent {
     private int aktualnyBieg;
     private int iloscBiegow;
     private Sprzeglo sprzeglo;
-
-    public SkrzyniaBiegow(String nazwa, double waga, double cena, int iloscBiegow) {
+    public SkrzyniaBiegow(String nazwa,  double waga, double cena, int iloscBiegow) {
         super(nazwa, waga, cena);
-        this.sprzeglo = new Sprzeglo("Basic", 200, 1000,true);
         this.iloscBiegow = iloscBiegow;
+        this.sprzeglo = new Sprzeglo("Basic", 200, 1000,false);
     }
-
     public void zwiekszBieg(){
-        if(this.sprzeglo.getStanSprzegla()){
-            if(aktualnyBieg<iloscBiegow){
+        if (sprzeglo.getStanSprzegla()) {
+            if (aktualnyBieg < iloscBiegow) {
                 aktualnyBieg++;
-                System.out.println("Zwiększono bieg na: " + aktualnyBieg);
+                System.out.println("Wrzucono bieg " + aktualnyBieg +".");
+            } else {
+                System.out.println("Wrrzzrrmrrr wciśnij sprzęgło.");
             }
-            else{
-                System.out.println("Maksymalny bieg");
-            }
-        }else {
-            System.out.println("Wrrgrrzmrrr Nie wciśnięto sprzęgła.");
         }
-
     }
-
     public void zmniejszBieg(){
-        if(this.sprzeglo.getStanSprzegla()){
-            if(aktualnyBieg>0){
+        if  (sprzeglo.getStanSprzegla()) {
+            if (aktualnyBieg > 0) {
                 aktualnyBieg--;
-                System.out.println("Zmniejszono bieg na: " + aktualnyBieg);
+                System.out.println("Redukcja do biegu " + aktualnyBieg +".");
             }
-            else {
-                System.out.println("Aktualnie jest Neutralny bieg");
-            }
-        }else {
-            System.out.println("Wrrgrrzmrrr Nie wciśnięto sprzęgła.");
+        } else {
+            System.out.println("Wrrzzrrmrrr wciśnij sprzęgło.");
         }
-
     }
-
     public void luz(){
-        aktualnyBieg=0;
+        aktualnyBieg = 0;
     }
 
     public int getAktualnyBieg() {return aktualnyBieg;}
@@ -52,4 +40,8 @@ public class SkrzyniaBiegow extends Komponent{
     public void setIloscBiegow(int iloscBiegow) {
         this.iloscBiegow = iloscBiegow;
     }
+    public void setSprzeglo(Sprzeglo sprzeglo) {
+        this.sprzeglo = sprzeglo;
+    }
+
 }

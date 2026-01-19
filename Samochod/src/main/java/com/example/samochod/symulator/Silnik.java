@@ -2,47 +2,43 @@ package com.example.samochod.symulator;
 
 public class Silnik extends Komponent {
     private int maxObroty;
-    private int Obroty;
-
+    private int obroty;
     public Silnik(String nazwa, double waga, double cena, int maxObroty) {
         super(nazwa, waga, cena);
         this.maxObroty = maxObroty;
-        this.Obroty = 0;
+        this.obroty = 0;
     }
-
-    public void uruchom() {
-        this.Obroty = 800;
+    public void uruchom(){
+        this.obroty = 800;
     }
+    public void zatrzymaj() {
+        this.obroty = 0;
 
-    public void zatrzymaj(){
-        this.Obroty = 0;
     }
-
     public void zwiekszObroty() {
-       if (this.Obroty < this.maxObroty) {this.Obroty += 200;}
+        if (this.maxObroty > this.obroty) {this.obroty += 200; }
     }
-
     public void zmniejszObroty() {
-        if (this.Obroty > 800) {this.Obroty -= 200;}
+        if (this.obroty > 800 ) {this.obroty -= 200;}
     }
 
     public void zwiekszObroty(int delta) {
-        if (this.Obroty + delta <= this.maxObroty) {this.Obroty += delta;}
-        else {this.Obroty = this.maxObroty;}
+        if (this.obroty + delta <= this.maxObroty) {this.obroty += delta;}
+        else {this.obroty = this.maxObroty;}
     }
     public void zmniejszObroty(int delta) {
-        if (this.Obroty - delta >= 800) {this.Obroty -= delta;}
-        else {this.Obroty = 800;}
+        if (this.obroty - delta >= 800) {this.obroty -= delta;}
+        else {this.obroty = 800;}
     }
+
 
     public int getMaxObroty() {
         return maxObroty;
     }
-
     public int getObroty() {
-        return Obroty;
+        return obroty;
     }
-
-    public void setMaxObroty(int maxObroty) {this.maxObroty = maxObroty;}
-
+    public void setmaxObroty(int maxObroty) {
+        this.maxObroty = maxObroty;
+    }
 }
