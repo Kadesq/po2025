@@ -13,23 +13,17 @@
 
 <VBox spacing="0.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.samochod.AddCarController"
-      prefWidth="480.0" prefHeight="650.0"
+      prefWidth="500.0" prefHeight="700.0"
       style="-fx-background-color: #f0f2f5;">
 
     <HBox alignment="CENTER_LEFT" prefHeight="70.0" style="-fx-background-color: #ffffff; -fx-border-color: #d0d7de; -fx-border-width: 0 0 1 0;">
-        <padding>
-            <Insets left="25.0" />
-        </padding>
-        <children>
-            <VBox alignment="CENTER_LEFT">
-                <Label text="Nowy Samochód" style="-fx-font-weight: bold; -fx-text-fill: #1a73e8;">
-                    <font>
-                        <Font name="Segoe UI" size="22.0" />
-                    </font>
-                </Label>
-                <Label text="Konfiguracja parametrów technicznych" style="-fx-text-fill: #444444; -fx-font-size: 13px;" />
-            </VBox>
-        </children>
+        <padding><Insets left="25.0" /></padding>
+        <VBox alignment="CENTER_LEFT">
+            <Label text="Konfigurator Pojazdu" style="-fx-font-weight: bold; -fx-text-fill: #1a73e8;">
+                <font><Font name="Segoe UI" size="22.0" /></font>
+            </Label>
+            <Label text="Ustaw parametry techniczne wszystkich podzespołów" style="-fx-text-fill: #444444; -fx-font-size: 13px;" />
+        </VBox>
     </HBox>
 
     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
@@ -42,44 +36,65 @@
                         <ColumnConstraints minWidth="120" />
                         <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
-                    <Label text="Model pojazdu:" style="-fx-text-fill: #24292f;" GridPane.rowIndex="0" />
-                    <TextField fx:id="modelField" promptText="np. Audi A4" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
+                    <Label text="Model:" style="-fx-text-fill: #333333;" GridPane.rowIndex="0" />
+                    <TextField fx:id="modelField" promptText="np. Nissan" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
 
-                    <Label text="Tablice rej.:" style="-fx-text-fill: #24292f;" GridPane.rowIndex="1" />
-                    <TextField fx:id="plateField" promptText="np. WA 12345" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                    <Label text="Tablice rej.:" style="-fx-text-fill: #333333;" GridPane.rowIndex="1" />
+                    <TextField fx:id="plateField" promptText="np. K4 DESQ" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
                 </GridPane>
             </VBox>
 
             <VBox style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d0d7de; -fx-border-radius: 10; -fx-padding: 15;">
-                <Label text="Jednostka napędowa" style="-fx-font-weight: bold; -fx-text-fill: #24292f; -fx-padding: 0 0 10 0; -fx-font-size: 15px;" />
+                <Label text="Silnik" style="-fx-font-weight: bold; -fx-text-fill: #24292f; -fx-padding: 0 0 10 0; -fx-font-size: 15px;" />
                 <GridPane hgap="15" vgap="12">
-                    <columnConstraints>
-                        <ColumnConstraints minWidth="120" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <Label text="Nazwa silnika:" style="-fx-text-fill: #24292f;" />
-                    <TextField fx:id="engineNameField" text="V12 TwinTurbo" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
+                    <columnConstraints><ColumnConstraints minWidth="120" /><ColumnConstraints hgrow="ALWAYS" /></columnConstraints>
 
-                    <Label text="Limit obrotów:" style="-fx-text-fill: #24292f;" GridPane.rowIndex="1" />
-                    <TextField fx:id="engineMaxRpmField" text="8500" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                    <Label text="Nazwa silnika:" style="-fx-text-fill: #333333;" GridPane.rowIndex="0" />
+                    <TextField fx:id="engineNameField" promptText="V8" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
 
-                    <Label text="Masa (kg):" style="-fx-text-fill: #24292f;" GridPane.rowIndex="2" />
-                    <TextField fx:id="engineWeightField" text="320" style="-fx-text-fill: black;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                    <Label text="Cena silnika:" style="-fx-text-fill: #333333;" GridPane.rowIndex="1" />
+                    <TextField fx:id="enginePriceField" promptText="15000" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                    <Label text="Masa silnika (kg):" style="-fx-text-fill: #333333;" GridPane.rowIndex="2" />
+                    <TextField fx:id="engineWeightField" promptText="250" style="-fx-text-fill: black;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                    <Label text="Max Obroty (RPM):" style="-fx-text-fill: #333333;" GridPane.rowIndex="3" />
+                    <TextField fx:id="engineMaxRpmField" promptText="7000" style="-fx-text-fill: black;" GridPane.rowIndex="3" GridPane.columnIndex="1" />
                 </GridPane>
             </VBox>
 
             <VBox style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d0d7de; -fx-border-radius: 10; -fx-padding: 15;">
-                <Label text="Przeniesienie napędu" style="-fx-font-weight: bold; -fx-text-fill: #24292f; -fx-padding: 0 0 10 0; -fx-font-size: 15px;" />
+                <Label text="Skrzynia Biegów" style="-fx-font-weight: bold; -fx-text-fill: #24292f; -fx-padding: 0 0 10 0; -fx-font-size: 15px;" />
                 <GridPane hgap="15" vgap="12">
-                    <columnConstraints>
-                        <ColumnConstraints minWidth="120" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <Label text="Biegi (ilość):" style="-fx-text-fill: #24292f;" />
-                    <TextField fx:id="gearboxCountField" text="6" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
+                    <columnConstraints><ColumnConstraints minWidth="120" /><ColumnConstraints hgrow="ALWAYS" /></columnConstraints>
 
-                    <Label text="Cena sprzęgła:" style="-fx-text-fill: #24292f;" GridPane.rowIndex="1" />
-                    <TextField fx:id="clutchPriceField" text="2500" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                    <Label text="Nazwa skrzyni:" style="-fx-text-fill: #333333;" GridPane.rowIndex="0" />
+                    <TextField fx:id="gearboxNameField" promptText="Manual 6" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
+
+                    <Label text="Cena skrzyni:" style="-fx-text-fill: #333333;" GridPane.rowIndex="1" />
+                    <TextField fx:id="gearboxPriceField" promptText="4500" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                    <Label text="Masa skrzyni (kg):" style="-fx-text-fill: #333333;" GridPane.rowIndex="2" />
+                    <TextField fx:id="gearboxWeightField" promptText="80" style="-fx-text-fill: black;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                    <Label text="Ilość biegów:" style="-fx-text-fill: #333333;" GridPane.rowIndex="3" />
+                    <TextField fx:id="gearboxCountField" promptText="6" style="-fx-text-fill: black;" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                </GridPane>
+            </VBox>
+
+            <VBox style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #d0d7de; -fx-border-radius: 10; -fx-padding: 15;">
+                <Label text="Sprzęgło" style="-fx-font-weight: bold; -fx-text-fill: #24292f; -fx-padding: 0 0 10 0; -fx-font-size: 15px;" />
+                <GridPane hgap="15" vgap="12">
+                    <columnConstraints><ColumnConstraints minWidth="120" /><ColumnConstraints hgrow="ALWAYS" /></columnConstraints>
+
+                    <Label text="Nazwa sprzęgła:" style="-fx-text-fill: #333333;" GridPane.rowIndex="0" />
+                    <TextField fx:id="clutchNameField" promptText="Sport 1+" style="-fx-text-fill: black;" GridPane.columnIndex="1" />
+
+                    <Label text="Cena sprzęgła:" style="-fx-text-fill: #333333;" GridPane.rowIndex="1" />
+                    <TextField fx:id="clutchPriceField" promptText="2100" style="-fx-text-fill: black;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                    <Label text="Masa sprzęgła (kg):" style="-fx-text-fill: #333333;" GridPane.rowIndex="2" />
+                    <TextField fx:id="clutchWeightField" promptText="15" style="-fx-text-fill: black;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
                 </GridPane>
             </VBox>
 
@@ -87,13 +102,11 @@
     </ScrollPane>
 
     <HBox alignment="CENTER_RIGHT" prefHeight="80.0" spacing="15.0" style="-fx-background-color: #ffffff; -fx-border-color: #d0d7de; -fx-border-width: 1 0 0 0;">
-        <padding>
-            <Insets right="25.0" />
-        </padding>
+        <padding><Insets right="25.0" /></padding>
         <Button onAction="#onCancel" text="Anuluj"
-                style="-fx-background-color: #f6f8fa; -fx-text-fill: #24292f; -fx-border-color: #d0d7de; -fx-border-radius: 5; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20;" />
-        <Button onAction="#onAdd" text="UTWÓRZ POJAZD"
-                style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 5; -fx-cursor: hand;" />
+                style="-fx-background-color: #f6f8fa; -fx-text-fill: #24292f; -fx-border-color: #d0d7de; -fx-border-radius: 5; -fx-font-weight: bold; -fx-padding: 8 20;" />
+        <Button onAction="#onAdd" text="ZATWIERDŹ I UTWÓRZ"
+                style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 25; -fx-background-radius: 5;" />
     </HBox>
 
 </VBox>
