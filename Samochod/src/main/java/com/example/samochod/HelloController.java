@@ -32,6 +32,7 @@ public class HelloController {
             carmodelTextField.setText("");
             carregistrationTextField.setText("");
             carweightTextField.setText("");
+            carspeedTextField.setText("");
             enginenameTextField.setText("");
             enginerpmTextField.setText("");
             engineweightTextField.setText("");
@@ -142,11 +143,6 @@ public class HelloController {
 
     public void initialize(){
         carComboBox.setItems(listaSamochodow);
-
-        //Samochod testowy = new Samochod("Nissan", "K4 DESQ");
-        //listaSamochodow.add(testowy);
-        //carComboBox.getSelectionModel().select(testowy);
-        //onCarComboBoxButton();
         odswiezWidok();
     }
 
