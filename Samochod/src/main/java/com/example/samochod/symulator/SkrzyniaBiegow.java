@@ -13,10 +13,10 @@ public class SkrzyniaBiegow extends Komponent {
         if (sprzeglo.getStanSprzegla()) {
             if (aktualnyBieg < iloscBiegow) {
                 aktualnyBieg++;
-                System.out.println("Wrzucono bieg " + aktualnyBieg +".");
-            } else {
-                System.out.println("Wrrzzrrmrrr wciśnij sprzęgło.");
+                System.out.println("Wrzucono bieg " + aktualnyBieg + ".");
             }
+        }else {
+            System.out.println("Wrrzzrrmrrr wciśnij sprzęgło.");
         }
     }
     public void zmniejszBieg(){

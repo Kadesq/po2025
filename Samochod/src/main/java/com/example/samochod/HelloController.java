@@ -87,8 +87,6 @@ public class HelloController {
 
     }
 
-    // W HelloController.java:
-
     private void stworzIkonkeDlaAuta(Samochod auto) {
         // 1. Tworzenie ikonki (bez zmian)
         javafx.scene.image.Image obrazek = new javafx.scene.image.Image(getClass().getResourceAsStream("/car-icon.jpg"));
@@ -119,7 +117,6 @@ public class HelloController {
                     kontener.setLayoutY(p.getY() - 25);
 
                     // OBRÓT: Obracamy TYLKO obrazek, a napis zostaje poziomo!
-                    // To jest super ficzer - napis się nie kręci do góry nogami.
                     Pozycja cel = auto.getCel();
                     double dx = cel.getX() - p.getX();
                     double dy = cel.getY() - p.getY();
@@ -130,7 +127,7 @@ public class HelloController {
 
                     if (auto == mojSamochod) {
                         double predkosc = auto.getAktualnaPredkosc();
-                        // Ustawiamy tekst w polu carspeedTextField (zrób formatowanie do 1 miejsca po przecinku)
+                        // Ustawiamy tekst w polu carspeedTextField
                         carspeedTextField.setText(String.format("%.1f km/h", predkosc));
                     }
                 });
@@ -265,8 +262,8 @@ public class HelloController {
     public void onRmCarButton() {
         if (mojSamochod != null) {
             // 1. Sprzątanie po usuwanym aucie
-            // Zatrzymujemy wątek (ważne, żeby nie aktualizował GUI po śmierci)
-            mojSamochod.interrupt(); // Lub ustaw flagę isRunning = false jeśli masz setter
+            // Zatrzymujemy wątek
+            mojSamochod.interrupt();
 
             // Usuwamy z mapy (jeśli ma ikonkę)
             if (mojSamochod.getIkonka() != null) {
@@ -307,5 +304,4 @@ public class HelloController {
             mojSamochod.jedzDo(x, y);
         }
     }
-
 }
